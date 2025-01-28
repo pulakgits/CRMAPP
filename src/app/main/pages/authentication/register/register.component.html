@@ -1,1 +1,23 @@
-<p>register works!</p>
+<div class="register-container">
+    <div class="register-card">
+      <h1 class="register-title">Create Your Account</h1>
+      <form>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter your username" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter your email" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" />
+        </div>
+        <button class="btn-submit" type="submit">Register</button>
+        <div class="options">
+          <a href="#" (click)="onSwitchToLogin()">Back to Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
