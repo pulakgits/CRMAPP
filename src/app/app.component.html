@@ -1,4 +1,8 @@
-<div class=" app-component">
-    <app-login *ngIf="showLogin" (switchView)="toggleView()"></app-login>
-    <app-register *ngIf="!showLogin" (switchView)="toggleView()"></app-register>
+<div>
+    
+    
+    <router-outlet></router-outlet>
 </div>
+
+
+

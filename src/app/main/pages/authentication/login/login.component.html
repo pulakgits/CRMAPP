@@ -1,45 +1,64 @@
-<div class="login-container">
-    <div class="login-card">
-      <h1 class="login-title">Welcome Back</h1>
-      <p class="login-subtitle">Log in to continue</p>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            formControlName="email"
-            placeholder="Enter your email"
-            [ngClass]="{ 'is-invalid': isFieldInvalid('email') }"
-          />
-          <div class="error-message" *ngIf="isFieldInvalid('email')">
-            Email is required and must be valid.
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            formControlName="password"
-            placeholder="Enter your password"
-            [ngClass]="{ 'is-invalid': isFieldInvalid('password') }"
-          />
-          <div class="error-message" *ngIf="isFieldInvalid('password')">
-            Password is required (min 6 characters).
-          </div>
-        </div>
-  
-        <button type="submit" class="btn-submit" [disabled]="loginForm.invalid">
-          Login
-        </button>
+<!-- sign-in.component.html -->
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="container">
+    <img src="assets\icons\meteocons\images\logos\logo-sx.PNG" alt="Logo">
+    <h2>Log in to your Account</h2>
+    <p>Welcome back!</p>
+    <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email"
+          formControlName="userid"
+          placeholder="Email/Users">
 
-        <div class="options">
-            <a href="#">Forgot Password?</a>
-            <a href="#" (click)="switchToRegister()">Create an Account</a>
+        <div class="text-danger" 
+          *ngIf="(loginForm.get('userid')?.touched || isSubmitted) && loginForm.get('userid')?.invalid">
+          <span *ngIf="loginForm.get('userid')?.hasError('required')">Email required</span>
+          <span *ngIf="loginForm.get('userid')?.hasError('userid') || loginForm.get('userid')?.hasError('pattern')">
+            Email invalid pattern
+          </span>
         </div>
-      </form>
-    </div>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password"
+          formControlName="password"
+          placeholder="Enter Password">
+
+        <div class="text-danger" 
+          *ngIf="(loginForm.get('password')?.touched || isSubmitted) && loginForm.get('password')?.invalid">
+          <span *ngIf="loginForm.get('password')?.hasError('required')">Password is required</span>
+          <span *ngIf="loginForm.get('password')?.hasError('minlength')">
+            Password must be at least 4 characters
+          </span>
+        </div>
+      </div>
+
+      <div class="options">
+        <label>
+          <input type="checkbox"> Remember me
+        </label>
+        <a href="#">Forgot Password?</a>
+      </div>
+
+      <div>
+        <button 
+          class="login-btn" 
+          type="submit" 
+          [disabled]="loginForm.invalid">
+          Log in
+        </button>
+      </div>
+    </form>
+
+    <p class="signup-link">Don't have an account? 
+      <a (click)="gotoRegister()" >Create an account</a>
+    </p>
+
+  </div>
 </div>
-  

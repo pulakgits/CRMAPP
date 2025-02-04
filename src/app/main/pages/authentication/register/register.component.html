@@ -1,23 +1,81 @@
-<div class="register-container">
-    <div class="register-card">
-      <h1 class="register-title">Create Your Account</h1>
-      <form>
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" placeholder="Enter your username" />
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="Enter your email" />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter your password" />
-        </div>
-        <button class="btn-submit" type="submit">Register</button>
-        <div class="options">
-          <a href="#" (click)="onSwitchToLogin()">Back to Login</a>
-        </div>
-      </form>
+<form [formGroup]="regForm" (ngSubmit)="onSubmit()">
+    <div class="header">
+        <img src="" alt="">
+        <h5>Vendor Registration</h5>
     </div>
-  </div>
+
+    <!-- Vendor Name -->
+    <div class="full-width">
+        <input type="text" placeholder="Name of Vendor/Company" formControlName="vendorName">
+        <div *ngIf="regForm.controls['vendorName'].invalid && regForm.controls['vendorName'].touched">
+            <small class="error">Please enter a vendor/company name</small>
+        </div>
+    </div>
+
+    <!-- Address (Full Width) -->
+    <div class="full-width">
+        <textarea placeholder="Address" formControlName="address"></textarea>
+        <div *ngIf="regForm.controls['address'].invalid && regForm.controls['address'].touched">
+            <small class="error">Please enter a valid address</small>
+        </div>
+    </div>
+
+    <!-- Country & State (Same Row) -->
+    <div class="grid-2">
+        
+        <select formControlName="country" (change)="onCountryChange()">
+            <option value="">Select Country</option>
+            <option *ngFor="let country of countries" [value]="country.country  ">
+                {{ country.country }}
+            </option>
+        </select>
+
+        <select formControlName="state" >
+            <option value="">Select State</option>
+            <option *ngFor="let state of states" [value]="state.name">
+                {{ state.name }}
+            </option>
+        </select>
+    </div>
+
+    <!-- City & Pincode (Same Row) -->
+    <div class="grid-2">
+        <div>
+            <input type="text" placeholder="City" formControlName="city">
+            <div *ngIf="regForm.controls['city'].invalid && regForm.controls['city'].touched">
+                <small class="error">Please enter a valid city</small>
+            </div>
+        </div>
+
+        <div>
+            <input type="text" placeholder="Pincode" formControlName="pincode">
+            <div *ngIf="regForm.controls['pincode'].invalid && regForm.controls['pincode'].touched">
+                <small class="error">Please enter a valid pincode</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile & Email (Same Row) -->
+    <div class="grid-2">
+        <div>
+            <input type="text" placeholder="Mobile" formControlName="mobile">
+            <div *ngIf="regForm.controls['mobile'].invalid && 
+            (regForm.controls['mobile'].touched || regForm.controls['mobile'].dirty)">
+                <small class="error">Please enter a valid mobile number</small>
+            </div>
+        </div>
+
+        <div>
+            <input type="text" placeholder="Email" formControlName="email">
+            <div *ngIf="regForm.controls['email'].invalid && regForm.controls['email'].touched">
+                <small class="error">Please enter a valid email</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Buttons -->
+    <div class="buttons">
+        <button type="submit" [disabled]="regForm.invalid">Sign Up</button>
+        <button type="button" (click)="gotoLogin()">Back To Login</button>
+    </div>
+</form>

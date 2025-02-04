@@ -1,46 +1,88 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
-CommonModule
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Route, Router } from '@angular/router';
-ReactiveFormsModule
+import { CommonModule, JsonPipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink, Router, RouterOutlet } from '@angular/router';
+import { response } from 'express';
+import { CommonService } from '../../../../services/common.service';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, JsonPipe, 
+    ReactiveFormsModule, RouterLink, RouterOutlet],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
+  
 })
 export class LoginComponent {
-  loginForm: FormGroup; // Declare loginForm as a property of the component
 
-  constructor(private router:Router, private fb: FormBuilder) {
-    // Initialize the loginForm
+  loginForm!:FormGroup;
+
+
+  isSubmitted = false;
+
+  data:any;
+
+  // logincomponent constructor
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private commonservice: CommonService,
+    private userService: UserService,
+  ) {}
+
+
+  // On init
+  ngOnInit():void{
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]], // Add email control
-      password: ['', [Validators.required, Validators.minLength(6)]], // Add password control
+      userid: ['', [
+        Validators.required,
+        // Validators.email,
+        // Validators.pattern('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(4)
+      ]]
+      // isAgree: [false]
     });
+ 
   }
 
-  // Check if a form field is invalid
-  isFieldInvalid(fieldName: string): boolean {
-    const control = this.loginForm.get(fieldName);
-    return control ? control.invalid && (control.dirty || control.touched) : false;
+  //  ***********************************************************************************
+  //  login functionality
+  //  ***********************************************************************************
+
+
+  login(){
+    this.isSubmitted=true;
+    this.signin();
   }
 
-  // Form submission handler
-  onSubmit(): void {
-    if (this.loginForm.valid) {
-      console.log('Form Submitted:', this.loginForm.value);
-    } else {
-      console.error('Form is invalid!');
-    }
-  }
-  @Output() switchView = new EventEmitter<void>();
 
-  switchToRegister() {
-    this.switchView.emit(); // Emit event to switch to register component
+
+  signin() {
+    let obj = JSON.parse(JSON.stringify(this.loginForm.value));
+    // console.log(obj);
+
+
+    this.userService.signin(obj).subscribe(response => {
+        // console.log(response);
+
+        this.router.navigate(['/appdashboard']);
+    })
+  }
+
+
+//  ***********************************************************************************
+//  Redirect to Register Pages
+//  ***********************************************************************************
+
+  gotoRegister(){
+    this.router.navigate(['/register']);
   }
 
 }
