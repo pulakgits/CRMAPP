@@ -1,12 +1,14 @@
 import { CommonModule, JsonPipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink, Router, RouterOutlet } from '@angular/router';
 import { response } from 'express';
 import { CommonService } from '../../../../services/common.service';
 import { UserService } from '../../../../services/user.service';
+import { log } from 'console';
+import { CustomValidators } from '../usable class/CustomValidators';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,9 @@ export class LoginComponent {
 
   data:any;
 
+  private _unscribeAll: Subject<any> = new Subject();
+  errorMessage: string = '';
+
   // logincomponent constructor
   constructor(
     private fb: FormBuilder, 
@@ -40,8 +45,8 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       userid: ['', [
         Validators.required,
-        // Validators.email,
-        // Validators.pattern('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')
+        CustomValidators.userInputValidator
+        
       ]],
       password: ['', [
         Validators.required,
@@ -62,19 +67,22 @@ export class LoginComponent {
     this.signin();
   }
 
-
-
   signin() {
-    let obj = JSON.parse(JSON.stringify(this.loginForm.value));
-    // console.log(obj);
-
-
-    this.userService.signin(obj).subscribe(response => {
-        // console.log(response);
-
-        this.router.navigate(['/appdashboard']);
-    })
+    this.commonservice.login(this.loginForm.value.userid, this.loginForm.value.password)
+    .subscribe((response: any) => {
+      console.log(response);
+      let currentUser = JSON.parse(JSON.stringify(response));
+      this.router.navigate(['/appdashboard']);
+      console.log("currentUser", currentUser);
+      
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    },
+      (error: any) => {
+        this.errorMessage = 'Invalid credentials';
+      }
+    );    
   }
+
 
 
 //  ***********************************************************************************

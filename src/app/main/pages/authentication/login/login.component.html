@@ -14,10 +14,10 @@
           placeholder="Email/Users">
 
         <div class="text-danger" 
-          *ngIf="(loginForm.get('userid')?.touched || isSubmitted) && loginForm.get('userid')?.invalid">
+          *ngIf="(loginForm.get('userid')?.touched || isSubmitted) && (loginForm.get('userid')?.invalid || isSubmitted || loginForm.get('userid')?.dirty) " >
           <span *ngIf="loginForm.get('userid')?.hasError('required')">Email required</span>
-          <span *ngIf="loginForm.get('userid')?.hasError('userid') || loginForm.get('userid')?.hasError('pattern')">
-            Email invalid pattern
+          <span *ngIf="loginForm.get('userid')?.hasError('userid') || loginForm.get('userid')?.hasError('invalidUserInput')">
+            Invalid
           </span>
         </div>
       </div>
@@ -60,5 +60,6 @@
       <a (click)="gotoRegister()" >Create an account</a>
     </p>
 
+    <p *ngIf="errorMessage">{{ errorMessage }}</p>
   </div>
 </div>

@@ -1,0 +1,237 @@
+<div class="modal-overlay">
+  <div class="container mt-4 modal-content scrollable-form" (click)="$event.stopPropagation()">
+    <div class="d-flex justify-content-between align-items-center mb-4 bg-light p-3">
+      <h2 class="text-primary">Add User/Employee</h2>
+      <button class="btn-close" (click)="closeModal()"><i class="fa fa-times"></i></button>
+    </div>
+    
+    <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">First Name *</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+            <input type="text" class="form-control" formControlName="firstname">
+          </div>
+          <p class="error" *ngIf="userForm.get('firstname')?.invalid && userForm.get('firstname')?.touched">First name is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Last Name</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+            <input type="text" class="form-control" formControlName="lastname">
+          </div>
+          <p class="error" *ngIf="userForm.get('lastname')?.invalid && userForm.get('lastname')?.touched">Last name is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Father/Guardian Name</label>
+          <input type="text" class="form-control" formControlName="fhname">
+          <p class="error" *ngIf="userForm.get('fhname')?.invalid && userForm.get('fhname')?.touched">Father name is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Gender</label>
+          <select class="form-select"  formControlName="gender">
+            <option selected>Choose...</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+
+          <p class="error" *ngIf="userForm.get('gender')?.invalid && userForm.get('gender')?.touched">Gender is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Date of Birth *</label>
+          <input type="date" class="form-control" formControlName="birthdate">
+          <p class="error" *ngIf="userForm.get('birthdate')?.invalid && userForm.get('birthdate')?.touched">Enter D.O.B required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Blood Group</label>
+          <select class="form-select" formControlName="bloodgroup">
+            <option selected>Choose...</option>
+            <option>A+</option>
+            <option>B+</option>
+            <option>O+</option>
+            <option>AB+</option>
+            <option>O-</option>
+          </select>
+
+          <p class="error" *ngIf="userForm.get('bloodgroup')?.invalid && userForm.get('bloodgroup')?.touched">Blood group is required</p>
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Address</label>
+          <textarea class="form-control" rows="2" formControlName="address"></textarea>
+          <p class="error" *ngIf="userForm.get('address')?.invalid && userForm.get('address')?.touched">Address is required</p>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">City</label>
+          <input type="text" class="form-control" formControlName="city">
+          <p class="error" *ngIf="userForm.get('city')?.invalid && userForm.get('city')?.touched">City is required</p>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Pin *</label>
+          <input type="text" class="form-control" formControlName="pin">
+          <p class="error" *ngIf="userForm.get('pin')?.invalid && userForm.get('pin')?.touched">Pincode is required</p>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Mobile Number *</label>
+          <input type="tel" class="form-control" formControlName="mobile">
+          <p class="error" *ngIf="userForm.get('mobile')?.invalid && userForm.get('mobile')?.touched">Mobile number is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Email *</label>
+          <input type="email" class="form-control" formControlName="email">
+          <p class="error" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">Enter a valid email</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Aadhaar No.</label>
+          <input type="text" class="form-control" formControlName="aadharno">
+          <p class="error" *ngIf="userForm.get('aadharno')?.invalid && userForm.get('aadharno')?.touched">Aadhaar number is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">PAN No.</label>
+          <input type="text" class="form-control" formControlName="panno">
+          <p class="error" *ngIf="userForm.get('panno')?.invalid && userForm.get('panno')?.touched">PAN number is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">PF No.</label>
+          <input type="text" class="form-control" formControlName="pfno">
+          <p class="error" *ngIf="userForm.get('pfno')?.invalid && userForm.get('pfno')?.touched">PF number is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">ESI No.</label>
+          <input type="text" class="form-control" formControlName="esino">
+          <p class="error" *ngIf="userForm.get('esino')?.invalid && userForm.get('esino')?.touched">ESI number is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Role</label>
+          <select class="form-select" formControlName="role">
+            <option>Admin</option>
+            <option>Employee</option>
+            <option>Manager</option>
+          </select>
+          <p class="error" *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched">Role is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Office</label>
+          <input type="text" class="form-control" formControlName="office">
+          <p class="error" *ngIf="userForm.get('office')?.invalid && userForm.get('office')?.touched">Office is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Shift</label>
+          <select class="form-select" formControlName="shift">
+            <option>Morning</option>
+            <option>Evening</option>
+            <option>Night</option>
+          </select>
+          <p class="error" *ngIf="userForm.get('shift')?.invalid && userForm.get('shift')?.touched">Shift is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Skill Type</label>
+          <select class="form-select" formControlName="skilltype">
+            <option>High Skilled</option>
+            <option>Medium Skilled</option>
+            <option>Low Skilled</option>
+          </select>
+          <p class="error" *ngIf="userForm.get('skilltype')?.invalid && userForm.get('skilltype')?.touched">Skill type is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Manager</label>
+          <input type="text" class="form-control" formControlName="managerid">
+          <p class="error" *ngIf="userForm.get('managerid')?.invalid && userForm.get('managerid')?.touched">Manager is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Date of Joining</label>
+          <input type="date" class="form-control" formControlName="joindate">
+          <p class="error" *ngIf="userForm.get('joindate')?.invalid && userForm.get('joindate')?.touched">Joining date is required</p>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Status</label>
+          <select class="form-select" formControlName="status">
+            <option>Active</option>
+            <option>Inactive</option>
+          </select>
+          <p class="error" *ngIf="userForm.get('status')?.invalid && userForm.get('status')?.touched">Status date is required</p>
+        </div>
+
+        <!-- Tracking Options  -->
+        <!-- <div class="mb-3"> -->
+          <!-- <label class="form-check-label me-3"> -->
+            <!-- <input type="checkbox" class="form-check-input" > Track Location -->
+          <!-- </label> -->
+          <!-- <label class="form-check-label me-3"> -->
+            <!-- <input type="checkbox" class="form-check-input"> Sales Tracking -->
+          <!-- </label> -->
+          <!-- <label class="form-check-label"> -->
+            <!-- <input type="checkbox" class="form-check-input"> Service Tracking -->
+          <!-- </label> -->
+        <!-- </div> -->
+      
+        <!-- Search Bank -->
+        <div class="mb-3">
+          <label class="form-label">Search Bank</label>
+          <select class="form-select"  formControlName="bank">
+            <option selected>AHMEDABAD MERCANTILE COOPERATIVE BANK</option>
+            <option>HDFC Bank</option>
+            <option>ICICI Bank</option>
+            <option>State Bank of India</option>
+          </select>
+          <p class="error" *ngIf="userForm.get('bank')?.invalid && userForm.get('bank')?.touched">bank is required</p>
+        </div>
+
+        <div class="row g-3">
+          <!-- Branch Name -->
+          <div class="col-md-6">
+            <label class="form-label">Branch Name *</label>
+            <div class="input-group" >
+              <span class="input-group-text"><i class="fa fa-map-marker-alt"></i></span>
+              <input type="text" class="form-control" formControlName="branch">
+            </div>
+            <p class="error" *ngIf="userForm.get('branch')?.invalid && userForm.get('branch')?.touched">Branch name is required</p>
+
+          </div>
+
+          <!-- IFSC Code -->
+          <div class="col-md-6">
+            <label class="form-label">IFSC Code *</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-shield-alt"></i></span>
+              <input type="text" class="form-control" formControlName="ifsc">
+            </div>
+            <p class="error" *ngIf="userForm.get('ifsc')?.invalid && userForm.get('ifsc')?.touched">IFSC code is required</p>
+          </div>
+
+          <!-- Account Number -->
+          <div class="col-md-6">
+            <label class="form-label">Account No. *</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+              <input type="text" class="form-control"  formControlName="accountno">
+            </div>
+
+            <p class="error" *ngIf="userForm.get('accountno')?.invalid && userForm.get('accountno')?.touched">Account number is required</p>
+          </div>
+
+          <!-- Password -->
+          <div class="col-md-6">
+            <label class="form-label">Password *</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-eye"></i></span>
+              <input type="password" class="form-control" formControlName="password">
+            </div>
+
+            <p class="error" *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">Password is required</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="mt-4 text-end">
+        <div class="modal-actions">
+          <button type="submit" class="save-btn" [disabled]="userForm.invalid || isSaving">
+            {{ isSaving ? 'Saving...' : 'Save' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>  

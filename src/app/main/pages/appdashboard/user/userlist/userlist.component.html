@@ -1,0 +1,55 @@
+<div class="dashboard-cards">
+
+    <div class="upper-table-container">
+        <!-- Search Bar -->
+        <input type="text" class="search-box"  placeholder="Search users..." >
+        <!-- Add User Button -->
+        <button class="add-user-btn" (click)="openModal()">+ Add User</button>
+    </div>
+    <!-- User Table -->
+    <div class="table-container">
+      <table>
+        <thead class="table-header">
+          <tr>
+            <th>#</th>
+            <th>User ID</th>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>BloodGroup</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{user.userid}}</td>
+            <td>{{ user.employeeid }}</td>
+            <td>{{ user.firstname }} {{ user.lastname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.mobile }}</td>
+            <td>{{user.bloodgroup}}</td>
+            <td class="action-btns">
+                <button class="edit-btn" (click)="openEditModal(user)">Edit</button>
+                <button class="delete-btn" (click)="deleteUser(user._id, i)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <p *ngIf="users.length === 0" class="no-users" >No users found.</p>
+    </div>
+
+
+    <!-- ✅ Show modal only when `isModalOpen` is true -->
+    <div class="userbox" *ngIf="isModalOpen">
+      <app-add-usermodel (close)="closeModal()" (userAdded)="addUser($event)"></app-add-usermodel>
+    </div>
+
+
+    <!-- ✅ Show Edit modal only when `isEditModalOpen` is true -->
+    <div class="userbox" *ngIf="isEditModalOpen">
+      <app-edit-user-model [user]="selectedUser" (close)="closeEditModal()"  (userUpdated)=" handleUserUpdate()"></app-edit-user-model>
+    </div>    
+</div>

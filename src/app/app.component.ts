@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { LoginComponent } from './main/pages/authentication/login/login.component';
 import { RegisterComponent } from './main/pages/authentication/register/register.component';
 
@@ -16,5 +15,6 @@ export class AppComponent {
 
   isLogin:boolean = false;
 
+  
   
 }

@@ -1,0 +1,41 @@
+<div>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+          <li  routerLink="./home">
+            Home 
+        </li>
+            <li routerLink="./analytics">
+              Analytics
+            
+            </li>
+            <li routerLink="./user" >
+              UsersList
+            </li>
+            <li routerLink="./setting">Settings</li>
+            <li (click)="logout() ">Logout</li>
+        </ul>
+
+        <!-- <ul> -->
+          <!-- <li> -->
+              <!-- <a [routerLink]="['/appdashboard/home']" routerLinkActive="active" (click)="toggleDropdown()"> -->
+                  <!-- Home ▾ -->
+              <!-- </a> -->
+              <!-- <ul *ngIf="isDropdownOpen" class="dropdown"> -->
+                  <!-- <li><a [routerLink]="['/appdashboard/home/dashboard']" routerLinkActive="active">Dashboard</a></li> -->
+              <!-- </ul> -->
+          <!-- </li> -->
+          <!-- <li><a [routerLink]="['/appdashboard/analytics']" routerLinkActive="active">Analytics</a></li> -->
+          <!-- <li><a [routerLink]="['/appdashboard/user']" routerLinkActive="active">Users</a></li> -->
+          <!-- <li><a [routerLink]="['/appdashboard/setting']" routerLinkActive="active">Settings</a></li> -->
+          <!-- <li><a href="javascript:void(0)" (click)="logout()">Logout</a></li> -->
+        <!-- </ul> -->
+
+      </div>
+   
+
+    <div class="main-content">
+
+        <router-outlet></router-outlet>  
+    </div>
+</div>
