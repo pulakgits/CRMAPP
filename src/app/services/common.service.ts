@@ -10,16 +10,16 @@
 
 
   export class CommonService {
+
+
     // private json url
     private jsonUrl = 'assets/jsons';
     private apiUrl = 'https://erp.sisx.in/vcrmapidev/api';//Dev API
     private authorization = 'Bearer c29mdG1lZXRzdmVuZG9yQ1JNOkoxNzFUU2U1VA==';
 
-
     constructor(
       private http: HttpClient
     ) {}
-
 
     private getHeaders() {
       return new HttpHeaders({
@@ -27,7 +27,6 @@
         'Content-Type': 'application/json',
       });
     }
-
 
     /**
    * ***********************************************************************************

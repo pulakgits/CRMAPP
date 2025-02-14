@@ -2,7 +2,7 @@
 
     <div class="upper-table-container">
         <!-- Search Bar -->
-        <input type="text" class="search-box"  placeholder="Search users..." >
+        <input type="text" class="search-box" [(ngModel)]="searchTerm" (input)="filterUsers()" placeholder="Search users..." >
         <!-- Add User Button -->
         <button class="add-user-btn" (click)="openModal()">+ Add User</button>
     </div>
@@ -12,27 +12,34 @@
         <thead class="table-header">
           <tr>
             <th>#</th>
-            <th>User ID</th>
             <th>Employee ID</th>
             <th>Name</th>
+            <th>Skill Type</th>
             <th>Email</th>
             <th>Mobile</th>
-            <th>BloodGroup</th>
-            <th>Action</th>
+            <th>Manager</th>
+            <th>Status</th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users; let i = index">
+          <tr *ngFor="let user of filteredUsers; let i = index">
             <td>{{ i + 1 }}</td>
-            <td>{{user.userid}}</td>
             <td>{{ user.employeeid }}</td>
             <td>{{ user.firstname }} {{ user.lastname }}</td>
+            <td>{{user.skilltype}}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.mobile }}</td>
-            <td>{{user.bloodgroup}}</td>
+            <td>{{user.managerid}}</td>
+            <td>{{user.status}}</td>
+
             <td class="action-btns">
-                <button class="edit-btn" (click)="openEditModal(user)">Edit</button>
-                <button class="delete-btn" (click)="deleteUser(user._id, i)">Delete</button>
+
+              <i class="fa-solid fa-pen-to-square" (click)="openEditModal(user)"></i>
+              <span class="material-symbols-outlined" (click)="openDeleteModal(user)">
+                delete
+              </span>
+
             </td>
           </tr>
         </tbody>
@@ -44,12 +51,33 @@
 
     <!-- ✅ Show modal only when `isModalOpen` is true -->
     <div class="userbox" *ngIf="isModalOpen">
+      <h1>open model</h1>
       <app-add-usermodel (close)="closeModal()" (userAdded)="addUser($event)"></app-add-usermodel>
     </div>
 
 
     <!-- ✅ Show Edit modal only when `isEditModalOpen` is true -->
+
     <div class="userbox" *ngIf="isEditModalOpen">
-      <app-edit-user-model [user]="selectedUser" (close)="closeEditModal()"  (userUpdated)=" handleUserUpdate()"></app-edit-user-model>
-    </div>    
+      <app-add-usermodel 
+        [user]="selectedUser" 
+        (close)="closeEditModal()"  
+        (userUpdate)="onUserUpdated($event)"
+        [isEditMode]="isEditMode">
+      </app-add-usermodel>
+    </div>
+
+
+    <!-- Open Delete User model -->
+    <div class="userbox" *ngIf="isDeleteModalOpen">
+      <app-deleteuser 
+        [user]="selectedUser" 
+        (close)="closeDeleteModal()"  
+        (userDeleted)="deleteUser($event)">
+      </app-deleteuser>
+    </div>  
+    
+
+    
 </div>
+

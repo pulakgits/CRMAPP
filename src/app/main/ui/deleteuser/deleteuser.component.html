@@ -1,0 +1,28 @@
+<div class="modal-overlay">
+    <div class="modal-content">
+        <div class="delete-modal">
+            <div class="modal-content">
+              <h3>Confirm Deletion</h3>
+              <p>Are you sure you want to delete <strong>{{ user?.firstname }} {{ user?.lastname }}</strong>?</p>
+              
+              <div class="button-group">
+                <button (click)="confirmDelete()" [disabled]="isDeleting">Yes, Delete</button>
+                <button (click)="cancelDelete()" [disabled]="isDeleting">Cancel</button>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  

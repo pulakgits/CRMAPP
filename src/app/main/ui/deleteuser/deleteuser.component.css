@@ -1,0 +1,65 @@
+.modal-overlay {
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100vw; 
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+  }
+  .modal-content {
+    background: white; 
+    padding: 20px; 
+    border-radius: 10px; 
+    width: 400px;
+  }
+
+
+.delete-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .button-group {
+    margin-top: 15px;
+  }
+  
+  button {
+    margin: 5px;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:first-child {
+    background: rgb(214, 24, 24);
+    color: white;
+    border-radius: 5rem;
+  }
+  button:first-child:hover {
+    background: rgb(169, 31, 31);
+  }
+  button:last-child {
+    background: gray;
+    color: white;
+    border-radius: 5rem;
+  }
+  button:last-child:hover {
+    background: rgb(91, 90, 90);
+  }

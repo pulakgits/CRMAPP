@@ -1,8 +1,8 @@
 <div class="modal-overlay">
   <div class="container mt-4 modal-content scrollable-form" (click)="$event.stopPropagation()">
-    <div class="d-flex justify-content-between align-items-center mb-4 bg-light p-3">
-      <h2 class="text-primary">Add User/Employee</h2>
-      <button class="btn-close" (click)="closeModal()"><i class="fa fa-times"></i></button>
+    <div class="d-flex justify-content-between align-items-center mb-4 bg-primary text-white p-3" >
+      <h2>{{ isEditMode ? 'Edit User' : 'Add User' }}</h2>
+      <button class="fa fa-times btn-close" (click)="closeModal()"></button>
     </div>
     
     <form [formGroup]="userForm" (ngSubmit)="saveUser()">
@@ -226,9 +226,11 @@
       </div>
       <div class="mt-4 text-end">
         <div class="modal-actions">
-          <button type="submit" class="save-btn" [disabled]="userForm.invalid || isSaving">
+          <button type="submit" class="save-btn" [disabled]="userForm.invalid || isSaving" *ngIf="!isEditMode">
             {{ isSaving ? 'Saving...' : 'Save' }}
           </button>
+
+          <button type="button" (click)="updateUser()" (userUpdated)="userUpdate.emit()"  *ngIf="isEditMode">Update</button>
         </div>
       </div>
     </form>

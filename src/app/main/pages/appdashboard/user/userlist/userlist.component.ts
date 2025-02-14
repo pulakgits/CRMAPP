@@ -1,60 +1,55 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { UserComponent } from '../user.component';
-import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { CommonService } from '../../../../../services/common.service';
 import { AddUsermodelComponent } from '../../../../ui/add-usermodel/add-usermodel.component';
-import { EditUserModelComponent } from '../../../../ui/edit-user-model/edit-user-model.component';
-import { log } from 'node:console';
+import { DeleteuserComponent } from '../../../../ui/deleteuser/deleteuser.component';
 
 @Component({
   selector: 'app-userlist',
   standalone: true,
-  imports: [CommonModule, AddUsermodelComponent,EditUserModelComponent],  // ✅ Required for *ngFor and *ngIf
+  imports: [CommonModule, AddUsermodelComponent, DeleteuserComponent, FormsModule],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.css'
 })
 export class UserlistComponent implements OnInit {
   users: any[] = [];
+  filteredUsers: any[] = [];
+  searchTerm: string = '';
 
   isModalOpen = false;
-
   isEditModalOpen = false;
+  isEditMode = false;
+  isDeleteModalOpen = false;
 
-  selectedUser: any ;
-
-  newUser = {
-    _id: '',
-    employeeid: '',
-    firstname: '',
-    lastname: '',
-    email: '',
-    mobile: '',
-    bloodgroup: '',
-  };
+  selectedUser: any;
 
   constructor(private router: Router, private commonservice: CommonService) {}
-    ngOnInit() {
-      this.loadUsers();
-    }
 
-  // Load user from the backend
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  // ✅ Load users from backend
   loadUsers() {
     this.commonservice.searchUsers({})
       .subscribe({
         next: (response) => {
-          console.log('API Response:', response);  
-          // Handle different response structures
+          console.log('API Response:', response);
+          
           if (response && Array.isArray(response.users)) {
             this.users = response.users || [];
           } else if (response && Array.isArray(response)) {
-            this.users = response; // Sometimes API may return an array directly
+            this.users = response;
           } else {
             console.warn('Unexpected API response format:', response);
             this.users = [];
           }
+
+          this.filteredUsers = this.users; // ✅ Initialize the filtered list
           console.log('Processed Users:', this.users);
+          console.log('Filtered Users:', this.filteredUsers);
         },
         error: (error) => {
           console.error('API Error:', error);
@@ -62,60 +57,69 @@ export class UserlistComponent implements OnInit {
       });
   }
 
-  // when click on add user button
+  // ✅ Search Users by Name
+  filterUsers() {
+    const search = this.searchTerm.toLowerCase().trim();
+    console.log('Search Term:', search);
+    console.log('Users Before Filter:', this.users);
+
+    this.filteredUsers = this.users.filter(user =>
+      (`${user.firstname} ${user.lastname}`).toLowerCase().includes(search)
+    );
+
+    console.log('Filtered Users:', this.filteredUsers);
+  }
+
+  // ✅ Open & close modals
   openModal() {
     this.isModalOpen = true;
   }
-
   closeModal() {
     this.isModalOpen = false;
-  }  
-
-
-  // Edit model open and closed method
+  }
   openEditModal(user: any) {
-    console.log('Edit user:', user);
-    this.selectedUser= user;
+    this.selectedUser = user;
     this.isEditModalOpen = true;
+    this.isEditMode = true;
   }
-
-  closeEditModal(){
+  closeEditModal() {
+    this.isEditMode = false;
     this.isEditModalOpen = false;
+    this.selectedUser = null;
   }
 
-
-  // when click on add user button
+  // ✅ Add user and refresh list
   addUser(user: any) {
-    // this.users.push(user); // ✅ Add new user to UI instantly
-  
-    // ✅ Reload user list from the backend (optional)
     this.loadUsers();
   }
 
-
   handleUserUpdate() {
-  
-    this.loadUsers(); // ✅ Reload user list from the backend (optional)
-    this.closeModal(); // Close the modal after updating
+    this.loadUsers();
+    this.closeModal();
+  }
+
+  // ✅ Update filtered list after editing user
+  onUserUpdated(updatedUser: any) {
+    const index = this.users.findIndex(user => user._id === updatedUser._id);
+    if (index !== -1) {
+      this.users[index] = updatedUser;
+      this.filterUsers();
+    }
+  }
+
+  // ✅ Handle delete user
+  openDeleteModal(user: any) {
+    this.selectedUser = user;
+    this.isDeleteModalOpen = true;
+  }
+  closeDeleteModal() {
+    this.isDeleteModalOpen = false;
+    this.selectedUser = null;
+  }
+  deleteUser(deletedUserId: string) {
+    this.users = this.users.filter(user => user._id !== deletedUserId);
+    this.filterUsers();
+    this.closeDeleteModal();
   }
   
-
-
-  // ✅ Handle confirmed delete
-
-  // delete user
-  deleteUser(userId: string, index: number) {
-    if (!confirm('Are you sure you want to delete this user?')) return;
-
-    this.commonservice.deleteUser(userId).subscribe({
-      next: (response) => {
-        console.log(`User ${userId} deleted successfully`, response);
-        this.users.splice(index, 1);  // ✅ Remove from UI after success
-      },
-      error: (err) => {
-        console.error('Failed to delete user:', err);
-        alert('Failed to delete user. Please try again.');
-      }
-    });
-  }
-} 
+}

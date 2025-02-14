@@ -72,15 +72,24 @@ tbody tr:hover {
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 5rem;
     font-size: 14px;
     transition: background 0.3s;
 }
+
 
 .add-user-btn:hover {
     background: #218838;
 }
 
+.action-btns {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+span, i{
+    cursor: pointer;
+}
 .edit-btn {
     background: #ffc107;
     color: black;
