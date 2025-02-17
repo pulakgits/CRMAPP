@@ -126,33 +126,18 @@ span, i{
     z-index: 100;
 }
 
+.save-btn {
+    background: green; 
+    color: white; 
+    padding: 5px 10px; 
+    border: none; 
+    cursor: pointer; 
+}
 
+.modal-overlay{
+    margin-bottom: 20px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.error{
+    color: red;
+}

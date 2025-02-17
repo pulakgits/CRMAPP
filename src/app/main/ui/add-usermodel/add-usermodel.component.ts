@@ -15,7 +15,7 @@ export class AddUsermodelComponent implements OnInit {
   @Input() user: any;
   // Output event emitters to notify parent component of changes
   @Output() close = new EventEmitter<void>();
-  @Output() userAdded = new EventEmitter<any>();
+  // @Output() userAdded = new EventEmitter<any>();
   @Output() userUpdate = new EventEmitter<any>();
 
   // Input property to determine if the component is in edit mode
@@ -77,25 +77,25 @@ export class AddUsermodelComponent implements OnInit {
   }
 
   // Method to save a new user
-  saveUser() {
+  // saveUser() {
     // Prevent submission if the form is invalid
-    if (this.userForm.invalid) return;
-    
-    this.isSaving = true; // Indicate saving process has started
-    
-    this.commonService.addUser(this.userForm.value).subscribe({
-      next: (response) => {
-        this.userAdded.emit(response); // Emit event after successful save
-        this.close.emit(); // Close modal
-        this.isSaving = false;
-      },
-      error: (err) => {
-        console.error('Error saving user:', err);
-        alert('Failed to save user.');
-        this.isSaving = false;
-      }
-    });
-  }
+    // if (this.userForm.invalid) return;
+    // 
+    // this.isSaving = true; // Indicate saving process has started
+    // 
+    // this.commonService.addUser(this.userForm.value).subscribe({
+      // next: (response) => {
+        // this.userAdded.emit(response); // Emit event after successful save
+        // this.close.emit(); // Close modal
+        // this.isSaving = false;
+      // },
+      // error: (err) => {
+        // console.error('Error saving user:', err);
+        // alert('Failed to save user.');
+        // this.isSaving = false;
+      // }
+    // });
+  // }
 
   // Method to update an existing user
   updateUser() {
